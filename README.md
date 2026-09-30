@@ -253,7 +253,7 @@ git clone YOUR_GITHUB_REPOSITORY_URL
 Example:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/PC-Telegram-Monitor.git
+git clone https://github.com/yug43-cpu/PC-Telegram-Monitor
 ```
 
 Go inside the project:
