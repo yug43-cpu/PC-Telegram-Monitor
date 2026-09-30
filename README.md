@@ -23,7 +23,7 @@ No VPS or separate server is required.
 * High download speed alert
 * High upload speed alert
 * Live Telegram status message
-* Automatic start when Windows starts
+* Automatic start after Windows login
 * Support for multiple PCs
 
 ---
@@ -41,6 +41,16 @@ Private Telegram Channel
 ```
 
 The monitor runs directly on the Windows PC.
+
+For multiple PCs:
+
+```text
+PC 1 ──┐
+       │
+PC 2 ──┼──→ Same Telegram Bot
+       │          ↓
+PC 3 ──┘    Same Private Channel
+```
 
 ---
 
@@ -210,7 +220,7 @@ Give the bot permission to:
 Post Messages
 ```
 
-The bot needs permission to send messages.
+The bot needs permission to send messages to the channel.
 
 ---
 
@@ -218,7 +228,7 @@ The bot needs permission to send messages.
 
 You need the Telegram channel Chat ID.
 
-For a private channel it normally looks similar to:
+For a private channel, it normally looks similar to:
 
 ```text
 -1001234567890
@@ -247,13 +257,7 @@ cd Desktop
 Clone the repository:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-```
-
-Example:
-
-```bash
-git clone https://github.com/yug43-cpu/PC-Telegram-Monitor
+git clone https://github.com/yug43-cpu/PC-Telegram-Monitor.git
 ```
 
 Go inside the project:
@@ -459,7 +463,7 @@ PC-Telegram-Monitor/
 └── README.md
 ```
 
-Some files/folders are created automatically:
+Some files and folders are created automatically:
 
 ```text
 venv/
@@ -475,7 +479,7 @@ They should not be uploaded to GitHub.
 
 # 15. Test the Monitor Manually
 
-Before making it automatic, test the monitor manually.
+Before making the monitor automatic, test it manually.
 
 Make sure the virtual environment is active:
 
@@ -663,6 +667,12 @@ Example:
 🕐 PC was OFF for: 6h 45m
 ```
 
+Note:
+
+PC OFF duration is estimated from the last saved monitoring time.
+
+A sudden power failure or forced shutdown may not be detected as a normal shutdown event.
+
 ---
 
 # 20. Make Monitor Start Automatically
@@ -689,7 +699,7 @@ Open Task Scheduler.
 
 # 21. Create Automatic Startup Task
 
-In Task Scheduler:
+In Task Scheduler, click:
 
 ```text
 Create Task
@@ -841,9 +851,53 @@ python.exe
 
 `pythonw.exe` allows the monitor to run without opening a visible Command Prompt window.
 
+Important:
+
+Replace `YOUR_USERNAME` with your actual Windows username.
+
 ---
 
-# 25. Task Scheduler - Conditions
+# 25. How to Find Your Python Path
+
+If you are not sure where your virtual environment Python is located, activate the environment:
+
+```bash
+venv\Scripts\activate
+```
+
+Then run:
+
+```bash
+python -c "import sys; print(sys.executable)"
+```
+
+It will show something similar to:
+
+```text
+C:\Users\YourName\Desktop\PC-Telegram-Monitor\venv\Scripts\python.exe
+```
+
+For Task Scheduler, use:
+
+```text
+pythonw.exe
+```
+
+instead of:
+
+```text
+python.exe
+```
+
+So the path becomes:
+
+```text
+C:\Users\YourName\Desktop\PC-Telegram-Monitor\venv\Scripts\pythonw.exe
+```
+
+---
+
+# 26. Task Scheduler - Conditions
 
 Open:
 
@@ -861,7 +915,7 @@ For a desktop PC, this setting normally does not matter.
 
 ---
 
-# 26. Task Scheduler - Settings
+# 27. Task Scheduler - Settings
 
 Open:
 
@@ -887,7 +941,7 @@ to save the task.
 
 ---
 
-# 27. Test Automatic Startup
+# 28. Test Automatic Startup
 
 First test the task manually.
 
@@ -909,15 +963,15 @@ Now restart Windows.
 
 After Windows starts and you log in, the monitor should start automatically.
 
-You should receive/update the Telegram monitoring message.
+You should receive or see the Telegram monitoring message.
 
 If this works, automatic startup is complete.
 
 ---
 
-# 28. What Happens After Windows Restart?
+# 29. What Happens After Windows Restart?
 
-The complete flow is:
+The complete process is:
 
 ```text
 Windows Restart
@@ -930,7 +984,7 @@ pythonw.exe starts
       ↓
 monitor.py starts
       ↓
-Internet / PC information is checked
+PC and Internet information is checked
       ↓
 Telegram message is sent
       ↓
@@ -941,7 +995,7 @@ You do not need to manually open the Python program every time.
 
 ---
 
-# 29. Run the Monitor Manually
+# 30. Run the Monitor Manually
 
 If you want to run it manually:
 
@@ -971,7 +1025,7 @@ Ctrl + C
 
 ---
 
-# 30. Multiple PC Setup
+# 31. Multiple PC Setup
 
 This section is optional.
 
@@ -999,7 +1053,7 @@ monitor_data.json
 
 ---
 
-# 31. Setup Second PC
+# 32. Setup Second PC
 
 On the second PC, install:
 
@@ -1010,10 +1064,10 @@ Git
 
 Then open Command Prompt or PowerShell.
 
-Clone the project:
+Clone the same project:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/yug43-cpu/PC-Telegram-Monitor.git
 ```
 
 Go inside:
@@ -1042,7 +1096,7 @@ pip install -r requirements.txt
 
 ---
 
-# 32. Create .env on Second PC
+# 33. Create .env on Second PC
 
 Create a new:
 
@@ -1080,7 +1134,7 @@ PC_NAME=Office-PC
 
 ---
 
-# 33. Test Second PC
+# 34. Test Second PC
 
 Run:
 
@@ -1098,44 +1152,13 @@ You should see:
 
 This makes it easy to know which PC sent the information.
 
----
-
-# 34. Automatic Startup on Second PC
-
-After testing the second PC, create the same Task Scheduler task.
-
-Use:
-
-```text
-Program/script:
-...\venv\Scripts\pythonw.exe
-```
-
-Arguments:
-
-```text
-...\monitor\monitor.py
-```
-
-Start in:
-
-```text
-...\PC-Telegram-Monitor
-```
-
-Trigger:
-
-```text
-At log on
-```
-
-Now the second PC will also start the monitor automatically.
+After testing, configure Task Scheduler on the second PC using the same automatic startup steps.
 
 ---
 
 # 35. Example With Two PCs
 
-PC 1:
+PC 1 `.env`:
 
 ```env
 BOT_TOKEN=YOUR_BOT_TOKEN
@@ -1143,7 +1166,7 @@ CHAT_ID=YOUR_CHAT_ID
 PC_NAME=Home-PC
 ```
 
-PC 2:
+PC 2 `.env`:
 
 ```env
 BOT_TOKEN=YOUR_BOT_TOKEN
@@ -1169,15 +1192,13 @@ Both PCs can use the same Telegram bot and same private channel.
 
 ---
 
-# 36. Do Not Copy monitor_data.json
+# 36. Each PC Has Its Own Data
 
-Do not copy this file from one PC to another:
+Each PC creates its own:
 
 ```text
 monitor/monitor_data.json
 ```
-
-Each PC should create and maintain its own monitoring data.
 
 Example:
 
@@ -1189,7 +1210,9 @@ PC 2
 └── monitor_data.json
 ```
 
-The data is local to each PC.
+Do not copy the file from one PC to another.
+
+Each PC should maintain its own monitoring history.
 
 ---
 
@@ -1407,7 +1430,7 @@ or:
 PC_NAME=Office-PC
 ```
 
-Restart the monitor after changing the `.env` file.
+Restart the monitor after changing `.env`.
 
 ---
 
@@ -1418,7 +1441,7 @@ If you forget the complete process later, follow these steps.
 Clone:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/yug43-cpu/PC-Telegram-Monitor.git
 ```
 
 Enter project:
@@ -1472,22 +1495,22 @@ Task Scheduler
 ↓
 Create Task
 ↓
-At log on
+Trigger: At log on
 ↓
-pythonw.exe
+Program: pythonw.exe
 ↓
-monitor.py
+Arguments: monitor\monitor.py
+↓
+Start in: PC-Telegram-Monitor
 ```
 
 Restart Windows.
 
-After login, the monitor should start automatically.
+After Windows login, the monitor should start automatically.
 
 ---
 
-# 42. Final Setup Flow
-
-For one PC:
+# 42. Complete One PC Setup Flow
 
 ```text
 Install Python
@@ -1502,52 +1525,68 @@ Add Bot as Administrator
       ↓
 Get Chat ID
       ↓
-git clone
+Clone GitHub Repository
       ↓
-Create venv
+Create Python venv
       ↓
 Activate venv
       ↓
-pip install -r requirements.txt
+Install requirements
       ↓
 Create .env
       ↓
-Test monitor
+Add Bot Token + Chat ID + PC Name
       ↓
-Create Task Scheduler
+Run monitor manually
       ↓
-Set At log on
+Test Telegram
       ↓
-Use pythonw.exe
+Create Windows Task Scheduler Task
+      ↓
+Set Trigger: At log on
+      ↓
+Set pythonw.exe
+      ↓
+Set monitor.py as argument
+      ↓
+Save Task
       ↓
 Restart Windows
       ↓
-Automatic monitoring starts
-```
-
-For multiple PCs:
-
-```text
-Same GitHub Repository
-        ↓
-   Clone on each PC
-        ↓
- Separate .env
-        ↓
- Different PC_NAME
-        ↓
- Separate venv
-        ↓
- Separate monitor_data.json
-        ↓
- Task Scheduler on each PC
-        ↓
- Same Telegram Channel
+Monitor starts automatically
 ```
 
 ---
 
-# 43. Project Goal
+# 43. Complete Multiple PC Setup Flow
+
+```text
+Same GitHub Repository
+        ↓
+Clone on each PC
+        ↓
+Create venv on each PC
+        ↓
+Install requirements
+        ↓
+Create separate .env
+        ↓
+Use different PC_NAME
+        ↓
+Create separate monitor_data.json
+        ↓
+Configure Task Scheduler on each PC
+        ↓
+Use same Telegram Bot
+        ↓
+Use same Telegram Channel
+        ↓
+Monitor all PCs from Telegram
+```
+
+---
+
+# 44. Project Goal
 
 This project is made for personal PC and internet monitoring.
 
