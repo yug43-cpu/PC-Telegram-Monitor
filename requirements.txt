@@ -1,3 +1,4 @@
 requests
 psutil
 python-dotenv
+pywin32
