@@ -922,7 +922,8 @@ monitor/monitor_data.json
 
 These should remain locally.
 
----
+---
+
 
 # Troubleshooting
 
@@ -1057,4 +1058,4 @@ The monitor should start automatically.
 
 For personal use, learning, and experimentation.
 
-#MADE BY YUG❤️
+# MADE BY YUG❤️
