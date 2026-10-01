@@ -920,39 +920,9 @@ venv/
 monitor/monitor_data.json
 ```
 
-These should remain local and should not be uploaded to GitHub.
+These should remain locally.
 
----
-
-# Updating the Project
-
-If the project is updated on GitHub:
-
-Open the project folder:
-
-```bash
-cd PC-Telegram-Monitor
-```
-
-Pull the latest changes:
-
-```bash
-git pull
-```
-
-If `requirements.txt` has changed, activate the virtual environment:
-
-```bash
-venv\Scripts\activate
-```
-
-Then update the packages:
-
-```bash
-pip install -r requirements.txt
-```
-
----
+---
 
 # Troubleshooting
 
@@ -1086,3 +1056,5 @@ The monitor should start automatically.
 # License
 
 For personal use, learning, and experimentation.
+
+#MADE BY YUG❤️
