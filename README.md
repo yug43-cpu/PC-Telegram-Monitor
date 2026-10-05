@@ -1058,4 +1058,4 @@ The monitor should start automatically.
 
 For personal use, learning, and experimentation.
 
-# MADE BY YUG❤️
+# MADE BY Yug🎀
